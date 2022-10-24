@@ -1,8 +1,26 @@
-// const fs = require('fs/promises')
+const fs = require('fs').promises;
+const path = require('path');
 
-const listContacts = async () => {}
+const contactPath = path.resolve('./models/contacts.json');
 
-const getContactById = async (contactId) => {}
+const listContacts = async () => {
+  try {
+    const data = await fs.readFile(contactPath, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const getContactById = async (contactId) => {
+  try {
+    console.log(contactId);
+    const data = await fs.readFile(contactPath, "utf-8");
+    return JSON.parse(data).filter((item) => item.id === contactId);    
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 const removeContact = async (contactId) => {}
 
