@@ -5,7 +5,7 @@ const contactPath = path.resolve('models/contacts.json');
 
 const listContacts = async () => {
   try {
-    const data = await fs.readFile(contactPath, "utf-8");
+    const data = await fs.readFile(contactPath, 'utf-8');
     return JSON.parse(data);
   } catch (error) {
     console.log(error.message);
@@ -14,7 +14,7 @@ const listContacts = async () => {
 
 const downloadNewList = (newList) => {
   fs.writeFile(contactPath, JSON.stringify(newList));
-}
+};
 
 const getContactById = async (contactId) => {
   try {
@@ -35,7 +35,7 @@ const removeContact = async (contactId) => {
   }
 };
 
-const addContact = async ({ name, email, phone }) => {
+const addContact = async ({name, email, phone}) => {
   try {
     const data = await listContacts();
     const newContact = await {
@@ -53,7 +53,7 @@ const addContact = async ({ name, email, phone }) => {
 };
 
 const updateContact = async (contactId, body) => {
-  const { name, email, phone } = body;
+  const {name, email, phone} = body;
   const newList = [];
   try {
     const data = await listContacts();

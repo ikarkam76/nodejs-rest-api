@@ -4,9 +4,12 @@ const {
   getOneContactById,
   addNewContact,
   deleteContact,
-  changeContact
+  changeContact,
 } = require('../../controllers/contactsController');
-const { validationContact, validationId } = require('../../middlewares/validationMiddleware');
+const {
+  validationContact,
+  validationId,
+} = require('../../middlewares/validationMiddleware');
 
 const router = new express.Router();
 
