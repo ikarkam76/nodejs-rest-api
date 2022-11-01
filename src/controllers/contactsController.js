@@ -16,8 +16,8 @@ const getContactByIdController = async (req, res, next) => {
   res.status(200).json({ response });
 };
 const addContactController = async (req, res, next) => {
-  await addContact(req);
-  res.status(201).json({ message: "success! contact added!" });
+  const response = await addContact(req);
+  res.status(201).json({response, message: "success! contact added!" });
 };
 
 const deleteContactController = async (req, res, next) => {
@@ -26,16 +26,16 @@ const deleteContactController = async (req, res, next) => {
 };
 
 const changeContactController = async (req, res, next) => {
-  await changeContact(req);
-  res.status(200).json({ message: "success! contact updated!" });
+  const response = await changeContact(req);
+  res.status(200).json({response, message: "success! contact updated!" });
 };
 
 const updateStatusContactController = async (req, res, next) => {
   if (Object.keys(req.body).length === 0) {
     return res.status(400).json({ message: "missing field favorite" });
   }
-  await updateStatusContact(req);
-  res.status(200).json({ message: "success! status updated!" });
+  const response = await updateStatusContact(req);
+  res.status(200).json({response, message: "success! status updated!" });
 };
 
 module.exports = {

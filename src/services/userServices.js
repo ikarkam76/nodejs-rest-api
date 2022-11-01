@@ -14,13 +14,18 @@ const addContact = async (req) => {
   const { name, email, phone, favorite } = req.body;
   const user = new User({ name, email, phone, favorite });
   await user.save();
+  return user;
 };
 
 const changeContact = async (req) => {
   const { name, email, phone, favorite } = req.body;
-  await User.findByIdAndUpdate(req.params.contactId, {
-    $set: { name, email, phone, favorite },
-  });
+  const data = await User.findByIdAndUpdate(
+    req.params.contactId,
+    {
+      $set: { name, email, phone, favorite },
+    },
+    { returnDocument: "after" });
+  return data;
 };
 
 const deleteContact = async (req) => {
@@ -28,9 +33,14 @@ const deleteContact = async (req) => {
 };
 
 const updateStatusContact = async (req) => {
-  await User.findByIdAndUpdate(req.params.contactId, {
-    $set: { favorite: req.body.favorite },
-  });
+  const data = await User.findByIdAndUpdate(
+    req.params.contactId,
+    {
+      $set: { favorite: req.body.favorite },
+    },
+    { returnDocument: "after" }
+  );
+  return data;
 };
 
 module.exports = {
