@@ -5,7 +5,6 @@ module.exports = {
     'node': true,
   },
   'extends': [
-    'google',
   ],
   'parserOptions': {
     'ecmaVersion': 12,
