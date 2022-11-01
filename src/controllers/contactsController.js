@@ -1,38 +1,38 @@
 const {
-  listContacts,
+  getContacts,
   getContactById,
-  removeContact,
+  deleteContact,
   addContact,
-  updateContact,
-} = require('../../models/contacts.js');
+  changeContact,
+} = require("../services/userServices.js");
 
-const getContacts = async (req, res, next) => {
-    const response = await listContacts(req);
-    res.status(200).json({response});
+const getContactsController = async (req, res, next) => {
+  const response = await getContacts(req);
+  res.status(200).json({ response });
 };
-const getOneContactById = async (req, res, next) => {
-    const response = await getContactById(req);
-    res.status(200).json({ response });
+const getContactByIdController = async (req, res, next) => {
+  const response = await getContactById(req);
+  res.status(200).json({ response });
 };
-const addNewContact = async (req, res, next) => {
-    await addContact(req);
-    res.status(201).json({message:'success! contact added!'});
-};
-
-const deleteContact = async (req, res, next) => {
-    await removeContact(req);
-    res.status(200).json({ message: "success! contact deleted" });
+const addContactController = async (req, res, next) => {
+  await addContact(req);
+  res.status(201).json({ message: "success! contact added!" });
 };
 
-const changeContact = async (req, res, next) => {
-    await updateContact(req);
-    res.status(200).json({ message: "success! contact updated!" });
+const deleteContactController = async (req, res, next) => {
+  await deleteContact(req);
+  res.status(200).json({ message: "success! contact deleted" });
+};
+
+const changeContactController = async (req, res, next) => {
+  await changeContact(req);
+  res.status(200).json({ message: "success! contact updated!" });
 };
 
 module.exports = {
-  getContacts,
-  getOneContactById,
-  addNewContact,
-  deleteContact,
-  changeContact,
+  getContactsController,
+  getContactByIdController,
+  addContactController,
+  deleteContactController,
+  changeContactController,
 };

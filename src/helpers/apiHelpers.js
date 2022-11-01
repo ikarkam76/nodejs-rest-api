@@ -4,4 +4,6 @@ const asyncWrapper = (controller) => {
     };
 };
 
+const error
+
 module.exports = { asyncWrapper };

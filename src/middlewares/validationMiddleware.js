@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { User } = require("../db/userModel");
 
 module.exports = {
   validationContact: (req, res, next) => {
@@ -6,8 +7,6 @@ module.exports = {
       name: Joi.string().min(2).max(30).required(),
       email: Joi.string().email().required(),
       phone: Joi.string()
-        .length(10)
-        .pattern(/^[0-9]+$/)
         .required(),
       favorite: Joi.boolean(),
     }).with("name", "name");
@@ -17,4 +16,11 @@ module.exports = {
     }
     next();
   },
+  validationId: async (req, res, next) => {
+    const data = await User.findById(req.params.contactId);
+    if (data === null) {
+      return res.status(404).json({ message: "contact not found" });
+    }
+    next();
+  }
 };

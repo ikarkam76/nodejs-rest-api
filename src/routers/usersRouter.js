@@ -1,24 +1,27 @@
 const express = require('express');
 const {
-  getContacts,
-  getOneContactById,
-  addNewContact,
-  deleteContact,
-  changeContact,
-} = require('../controllers/contactsController');
+  getContactsController,
+  getContactByIdController,
+  addContactController,
+  deleteContactController,
+  changeContactController,
+} = require("../controllers/contactsController");
 const { asyncWrapper } = require('../helpers/apiHelpers');
-const {collectionsMiddlewear} = require('../middlewares/collectionsMiddlewear');
 const {
-  validationContact,
+  validationContact, validationId,
   } = require('../middlewares/validationMiddleware');
 
 const router = new express.Router();
 
-router.use(collectionsMiddlewear);
+router.get("/", asyncWrapper(getContactsController));
+router.get("/:contactId",validationId, asyncWrapper(getContactByIdController));
+router.post("/", validationContact, asyncWrapper(addContactController));
+router.delete("/:contactId",validationId, asyncWrapper(deleteContactController));
+router.put(
+  "/:contactId",
+  validationId,
+  validationContact,
+  asyncWrapper(changeContactController)
+);
 
-router.get("/", asyncWrapper(getContacts));
-router.get("/:contactId", asyncWrapper(getOneContactById));
-router.post("/", validationContact, asyncWrapper(addNewContact));
-router.delete("/:contactId", asyncWrapper(deleteContact));
-router.put("/:contactId", validationContact, asyncWrapper(changeContact));
 module.exports = router;
