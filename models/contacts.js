@@ -1,12 +1,15 @@
 const fs = require('fs').promises;
 const path = require('path');
+const {ObjectId} = require('mongodb');
 
 const contactPath = path.resolve('models/contacts.json');
+const {connectMongo} = require('../src/db/connection')
 
 const listContacts = async () => {
   try {
-    const data = await fs.readFile(contactPath, 'utf-8');
-    return JSON.parse(data);
+    const { Users } = await connectMongo();
+    const data = await Users.find({}).toArray();
+    return data;
   } catch (error) {
     console.log(error.message);
   }
@@ -18,8 +21,9 @@ const downloadNewList = (newList) => {
 
 const getContactById = async (contactId) => {
   try {
-    const data = await listContacts();
-    return data.filter((item) => item.id === contactId);
+    const { Users } = await connectMongo();
+    const data = await Users.findOne({_id: new ObjectId(contactId)});
+    return data;
   } catch (error) {
     console.log(error.message);
   }

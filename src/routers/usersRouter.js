@@ -5,11 +5,11 @@ const {
   addNewContact,
   deleteContact,
   changeContact,
-} = require('../../controllers/contactsController');
+} = require('../controllers/contactsController');
 const {
   validationContact,
   validationId,
-} = require('../../middlewares/validationMiddleware');
+} = require('../middlewares/validationMiddleware');
 
 const router = new express.Router();
 

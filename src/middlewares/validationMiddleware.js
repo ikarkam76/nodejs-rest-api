@@ -24,7 +24,7 @@ module.exports = {
   },
   validationId: async (req, res, next) => {
     const data = await getContactById(req.params.contactId);
-    if (!data[0]) {
+    if (!data) {
       return res.status(404).json({message: 'Not found!'});
     };
     next();
