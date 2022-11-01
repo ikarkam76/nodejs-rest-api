@@ -27,10 +27,17 @@ const deleteContact = async (req) => {
   await User.findByIdAndRemove(req.params.contactId);
 };
 
+const updateStatusContact = async (req) => {
+  await User.findByIdAndUpdate(req.params.contactId, {
+    $set: { favorite: req.body.favorite },
+  });
+};
+
 module.exports = {
   getContacts,
   getContactById,
   deleteContact,
   addContact,
   changeContact,
+  updateStatusContact,
 };

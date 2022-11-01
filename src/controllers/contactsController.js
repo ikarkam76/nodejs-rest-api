@@ -4,6 +4,7 @@ const {
   deleteContact,
   addContact,
   changeContact,
+  updateStatusContact,
 } = require("../services/userServices.js");
 
 const getContactsController = async (req, res, next) => {
@@ -29,10 +30,16 @@ const changeContactController = async (req, res, next) => {
   res.status(200).json({ message: "success! contact updated!" });
 };
 
+const updateStatusContactController = async (req, res, next) => {
+  await updateStatusContact(req);
+  res.status(200).json({ message: "success! status updated!" });
+};
+
 module.exports = {
   getContactsController,
   getContactByIdController,
   addContactController,
   deleteContactController,
   changeContactController,
+  updateStatusContactController
 };

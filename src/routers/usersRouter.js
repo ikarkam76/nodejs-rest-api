@@ -5,6 +5,7 @@ const {
   addContactController,
   deleteContactController,
   changeContactController,
+  updateStatusContactController,
 } = require("../controllers/contactsController");
 const { asyncWrapper } = require('../helpers/apiHelpers');
 const {
@@ -22,6 +23,11 @@ router.put(
   validationId,
   validationContact,
   asyncWrapper(changeContactController)
+);
+router.patch(
+  "/:contactId/favorite",
+  validationId,
+  asyncWrapper(updateStatusContactController)
 );
 
 module.exports = router;
