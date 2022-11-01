@@ -31,6 +31,9 @@ const changeContactController = async (req, res, next) => {
 };
 
 const updateStatusContactController = async (req, res, next) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({ message: "missing field favorite" });
+  }
   await updateStatusContact(req);
   res.status(200).json({ message: "success! status updated!" });
 };
