@@ -1,56 +1,48 @@
 const {
-  listContacts,
+  getContacts,
   getContactById,
-  removeContact,
+  deleteContact,
   addContact,
-  updateContact,
-} = require('../../models/contacts.js');
+  changeContact,
+  updateStatusContact,
+} = require("../services/userServices.js");
 
-const getContacts = async (req, res, next) => {
-  try {
-    const response = await listContacts();
-    res.status(200).json({response});
-  } catch (error) {
-    res.status(500).json({message: error.message});
-  }
+const getContactsController = async (req, res, next) => {
+  const response = await getContacts(req);
+  res.status(200).json({ response });
 };
-const getOneContactById = async (req, res, next) => {
-  try {
-    const response = await getContactById(req.params.contactId);
-    res.status(200).json({response});
-  } catch (error) {
-    res.status(500).json({message: error.message});
-  }
+const getContactByIdController = async (req, res, next) => {
+  const response = await getContactById(req);
+  res.status(200).json({ response });
 };
-const addNewContact = async (req, res, next) => {
-  try {
-    const response = await addContact(req.body);
-    res.status(201).json({response});
-  } catch (error) {
-    res.status(500).json({message: error.message});
-  }
+const addContactController = async (req, res, next) => {
+  const response = await addContact(req);
+  res.status(201).json({response, message: "success! contact added!" });
 };
-const deleteContact = async (req, res, next) => {
-  try {
-    await removeContact(req.params.contactId);
-    res.status(200).json({message: 'contact deleted'});
-  } catch (error) {
-    res.status(500).json({message: error.message});
-  }
+
+const deleteContactController = async (req, res, next) => {
+  await deleteContact(req);
+  res.status(200).json({ message: "success! contact deleted" });
 };
-const changeContact = async (req, res, next) => {
-  try {
-    const response = await updateContact(req.params.contactId, req.body);
-    res.status(200).json({response});
-  } catch (error) {
-    res.status(500).json({message: error.message});
+
+const changeContactController = async (req, res, next) => {
+  const response = await changeContact(req);
+  res.status(200).json({response, message: "success! contact updated!" });
+};
+
+const updateStatusContactController = async (req, res, next) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({ message: "missing field favorite" });
   }
+  const response = await updateStatusContact(req);
+  res.status(200).json({response, message: "success! status updated!" });
 };
 
 module.exports = {
-  getContacts,
-  getOneContactById,
-  addNewContact,
-  deleteContact,
-  changeContact,
+  getContactsController,
+  getContactByIdController,
+  addContactController,
+  deleteContactController,
+  changeContactController,
+  updateStatusContactController
 };
