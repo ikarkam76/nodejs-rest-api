@@ -1,31 +1,40 @@
-## GoIT Node.js Course Template Homework
 
-Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)
-Форк створить репозиторій на вашому http://github.com
-
-Додайте ментора до колаборації
-
-Для кожної домашньої роботи створюйте свою гілку.
-
-- hw02
-- hw03
-- hw04
-- hw05
-- hw06
-
-Кожна нова гілка для др повинна робитися з master
-
-Після того, як ви закінчили виконувати домашнє завдання у своїй гілці, необхідно зробити пулл-реквест (PR). Потім додати ментора для рев'ю коду. Тільки після того, як ментор заапрувить PR, ви можете виконати мердж гілки з домашнім завданням у майстер.
-
-Уважно читайте коментарі ментора. Виправте зауваження та зробіть коміт у гілці з домашнім завданням. Зміни підтягнуться у PR автоматично після того, як ви відправите коміт з виправленнями на github
-Після виправлення знову додайте ментора на рев'ю коду.
-
-- При здачі домашньої роботи є посилання на PR
-- JS-код чистий та зрозумілий, для форматування використовується Prettier
-
-### Команди:
-
-- `npm start` &mdash; старт сервера в режимі production
-- `npm run start:dev` &mdash; старт сервера в режимі розробки (development)
-- `npm run lint` &mdash; запустити виконання перевірки коду з eslint, необхідно виконувати перед кожним PR та виправляти всі помилки лінтера
-- `npm lint:fix` &mdash; та ж перевірка лінтера, але з автоматичними виправленнями простих помилок
+## GoIT Node.js 
+This project created with:
+- [cors](https://github.com/expressjs/cors#readme)
+- [morgan](https://github.com/expressjs/morgan#readme)
+- [express](http://expressjs.com/)
+- [mongoose](https://mongoosejs.com/)
+- [joi](https://github.com/hapijs/joi#readme)
+- [cross-env](https://github.com/kentcdodds/cross-env#readme)
+- [dotenv](https://github.com/motdotla/dotenv#readme)
+- [nodemon](https://nodemon.io/)
+- [eslint](https://eslint.org/)
+ ### 1. Create a .env file in the root of your project:
+```javascript
+.env
+1. PORT=3000 //your localhost port, for example 3000
+2. MONGODB_URL=mongodb+srv:... //path to your database on mongodb
+```
+ ### 2. Install all dependencies with `npm` or `yarn`
+ ### Commands:
+- `npm start` &mdash; start the server in production mode
+- `npm run start:dev` &mdash; start the server in development mode
+- `npm run lint` &mdash; run a code check with eslint, must run before each PR and fix all linter errors
+- `npm lint:fix` &mdash; the same linter check, but with automatic fixes for simple errors
+ ### Routes:
+Server will start on `/api/contacts` 
+- `GET` &mdash; `/` get all contacts
+- `GET` &mdash; `/:contactId` get contact by id
+- `POST` &mdash; `/` add new contact
+- `PUT` &mdash; `/:contactId` change one contact by id
+- `DELETE` &mdash; `/:contactId` remove one contact by id
+- `PATCH` &mdash;  `/:contactId/favorite` change status in one contact
+#### Options:
+`POST` &mdash; body of new contact:
+Field    | Option  | Description                 |Example
+---------|---------|-----------------------------|-------
+name     | string  |anything                     |"Denis Smit"
+email    | string  | valid email address         | "email@site.com"
+phone    | string  | valid phone number          | "(000)123-4567"
+favorite | boolean |not required, default "false"| `true` or `false`
