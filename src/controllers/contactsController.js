@@ -5,7 +5,7 @@ const {
   addContact,
   changeContact,
   updateStatusContact,
-} = require("../services/userServices.js");
+} = require("../services/contactServices");
 
 const getContactsController = async (req, res, next) => {
   const response = await getContacts(req);

@@ -1,25 +1,25 @@
-const { User } = require("../db/userModel");
+const { Contact } = require("../db/contactModel");
 
 const getContacts = async (req) => {
-  const data = await User.find({});
+  const data = await Contact.find({});
   return data;
 };
 
 const getContactById = async (req) => {
-  const data = await User.findById(req.params.contactId);
+  const data = await Contact.findById(req.params.contactId);
   return data;
 };
 
 const addContact = async (req) => {
   const { name, email, phone, favorite } = req.body;
-  const user = new User({ name, email, phone, favorite });
-  await user.save();
-  return user;
+  const contact = new Contact({ name, email, phone, favorite });
+  await contact.save();
+  return contact;
 };
 
 const changeContact = async (req) => {
   const { name, email, phone, favorite } = req.body;
-  const data = await User.findByIdAndUpdate(
+  const data = await Contact.findByIdAndUpdate(
     req.params.contactId,
     {
       $set: { name, email, phone, favorite },
@@ -29,11 +29,11 @@ const changeContact = async (req) => {
 };
 
 const deleteContact = async (req) => {
-  await User.findByIdAndRemove(req.params.contactId);
+  await Contact.findByIdAndRemove(req.params.contactId);
 };
 
 const updateStatusContact = async (req) => {
-  const data = await User.findByIdAndUpdate(
+  const data = await Contact.findByIdAndUpdate(
     req.params.contactId,
     {
       $set: { favorite: req.body.favorite },
