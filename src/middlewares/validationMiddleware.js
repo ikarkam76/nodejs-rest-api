@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { Contact } = require("../db/contactModel");
+const { Contact } = require("../models/contactModel");
 
 module.exports = {
   validationContact: (req, res, next) => {

@@ -12,22 +12,22 @@ const {
   validationContact, validationId,
   } = require('../middlewares/validationMiddleware');
 
-const router = new express.Router();
+const contactsRouter = new express.Router();
 
-router.get("/", asyncWrapper(getContactsController));
-router.get("/:contactId",validationId, asyncWrapper(getContactByIdController));
-router.post("/", validationContact, asyncWrapper(addContactController));
-router.delete("/:contactId",validationId, asyncWrapper(deleteContactController));
-router.put(
+contactsRouter.get("/", asyncWrapper(getContactsController));
+contactsRouter.get("/:contactId",validationId, asyncWrapper(getContactByIdController));
+contactsRouter.post("/", validationContact, asyncWrapper(addContactController));
+contactsRouter.delete("/:contactId",validationId, asyncWrapper(deleteContactController));
+contactsRouter.put(
   "/:contactId",
   validationId,
   validationContact,
   asyncWrapper(changeContactController)
 );
-router.patch(
+contactsRouter.patch(
   "/:contactId/favorite",
   validationId,
   asyncWrapper(updateStatusContactController)
 );
 
-module.exports = router;
+module.exports = contactsRouter;
