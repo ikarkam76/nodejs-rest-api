@@ -1,14 +1,21 @@
 const { User } = require('../models/userModel');
 
-const register = async (req) => {
+const register = async (req, res) => {
   const { email, password, subscription } = req.body;
     const user = new User({ email, password, subscription });
-    await user.save();
+    try {
+        await user.save();
+        return user;
+    } catch (error) {
+        if (error.message.includes('duplicate key')) {
+            return res.status(409).json({ message: "Email in use" });
+        }
+        throw error;
+    }
 };
 
 const login = async (req) => {
     const { email, password } = req.body;
-    console.log(email, password);
 };
 
 
