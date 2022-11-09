@@ -6,6 +6,6 @@ const {validationUser} = require("../middlewares/validationMiddleware");
 const authRouter = new express.Router();
 
 authRouter.post("/register", validationUser, asyncWrapper(registerController));
-authRouter.get('/login', asyncWrapper(loginController));
+authRouter.get("/login", validationUser, asyncWrapper(loginController));
 
 module.exports = authRouter;
