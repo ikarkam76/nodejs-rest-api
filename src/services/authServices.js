@@ -48,7 +48,12 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
- res.json(req.user) //TODO add logik
+    const { _id } = req.user;
+    await User.findByIdAndUpdate(
+      _id,
+      { $set: { token: '' } }
+    );
+    res.status(204).json({});
 };
 
 const current = async (req, res) => {
