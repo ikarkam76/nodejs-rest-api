@@ -57,7 +57,7 @@ const logout = async (req, res) => {
 };
 
 const current = async (req, res) => {
-  res.json(req.user); //TODO add logik
+  res.status(200).json({email:req.user.email, subscription:req.user.subscription}); 
 };
 
 module.exports = { register, login, logout, current };
