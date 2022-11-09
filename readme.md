@@ -32,8 +32,8 @@ This project created with:
 
 #### Contacts:  `/api/contacts`
 - `GET` &mdash; `/` get all contacts 
- - filter:  request `favorite`: `true` or `false`
- - pagination: reguest `page`: /number/, `limit`: /number/
+  filter:  request `favorite`: `true` or `false`
+  pagination: reguest `page`: /number/, `limit`: /number/
 - `GET` &mdash; `/:contactId` get contact by id
 - `POST` &mdash; `/` add new contact
 - `PUT` &mdash; `/:contactId` change one contact by id
