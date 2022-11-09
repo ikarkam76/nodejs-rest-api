@@ -2,7 +2,9 @@ const { Contact } = require("../models/contactModel");
 
 const getContacts = async (req, res) => {
   const { _id } = req.user;
-  const data = await Contact.find({owner: _id}).populate('owner', 'email');
+  const { page = 1, limit = 2 } = req.query;
+  const skip = (page - 1) * limit;
+  const data = await Contact.find({owner: _id}, '', {skip, limit}).populate('owner', 'email');
   return data;
 };
 
