@@ -18,12 +18,11 @@ const authMiddlewar = async (req, res, next) => {
             req.user = user;
             next();
         } catch (error) {
-            if (error.message === "Invalide signature") {
-                res.status(401).json({ message: "Not authorized" });
+            if (error.message === "invalid signature") {
+              res.status(401).json({ message: "Not authorized" });
             }
-            throw error;
+            next(error);
         }
-
 }
 
 module.exports = authMiddlewar;

@@ -29,10 +29,10 @@ const contactSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  // owner: {
-  //   type: SchemaTypes.ObjectId,
-  //   ref: "users",
-  // },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
 });
 
 const Contact = mongoose.model('Contact', contactSchema);
