@@ -32,9 +32,16 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
         return res.status(401).json({message: "Wrong password!"})
     }
-    const token = jwt.sign({ id: user._id }, JWT_SECRET);
+    const token = jwt.sign({ _id: user._id }, JWT_SECRET);
     res.status(200).json({ token: token, message: "Token created!"});
 };
 
+const logout = async (req, res) => {
+ res.json(req.user) //TODO add logik
+};
 
-module.exports = { register, login };
+const current = async (req, res) => {
+  res.json(req.user); //TODO add logik
+};
+
+module.exports = { register, login, logout, current };

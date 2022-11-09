@@ -6,15 +6,14 @@ const {JWT_SECRET} = process.env;
 const authMiddlewar = async (req, res, next) => {
     const { authorization = ""} = req.headers;
     const [bearer, token] = authorization.split(" ");
-
     if (bearer !== 'Bearer') {
-        res.status(401).json({ message: "Not authorized" });
+        res.status(401).json({ message: "Not authorized token" });
     }
         try {
-            const { id } = jwt.verify(token, JWT_SECRET);
-            const user = await User.findById(id);
+            const { _id } = await jwt.verify(token, JWT_SECRET);
+            const user = await User.findById(_id);
             if (!user) {
-                res.status(401).json({ message: "Not authorized" });
+                res.status(401).json({ message: "Not authorized user" });
             }
             req.user = user;
             next();
