@@ -1,5 +1,8 @@
 const { User } = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const {JWT_SECRET} = process.env;
 
 const register = async (req, res) => {
     const { email, password, subscription } = req.body;
@@ -29,8 +32,8 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
         return res.status(401).json({message: "Wrong password!"})
     }
-    const token = "tokengood";
-    res.status(200).json({ data: token });
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
+    res.status(200).json({ token: token, message: "Token created!"});
 };
 
 
