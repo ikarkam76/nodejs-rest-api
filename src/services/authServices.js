@@ -60,4 +60,15 @@ const current = async (req, res) => {
   res.status(200).json({email:req.user.email, subscription:req.user.subscription}); 
 };
 
-module.exports = { register, login, logout, current };
+const updateSubscription = async (req, res) => {
+    const { subscription } = req.body;
+    const { _id } = req.user;
+    const response = await User.findByIdAndUpdate(
+      _id,
+      { $set: { subscription } },
+      { returnDocument: "after" }
+    );
+    res.status(200).json(response);
+};
+
+module.exports = { register, login, logout, current, updateSubscription };

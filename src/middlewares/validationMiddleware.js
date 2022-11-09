@@ -15,10 +15,11 @@ module.exports = {
     }
     next();
   },
-  validationId: async (req, res, next) => {
-    const data = await Contact.findById(req.params.contactId);
-    if (data === null) {
-      return res.status(404).json({ message: "contact not found" });
+  validationSubscription: async (req, res, next) => {
+    const subSchema = Joi.string().valid("pro", "starter", "business");
+    const { error } = subSchema.validate(req.body.subscription);
+    if (error) {
+      return res.status(400).json({ message: error.details });
     }
     next();
   },
