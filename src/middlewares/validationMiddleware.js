@@ -23,6 +23,14 @@ module.exports = {
     }
     next();
   },
+  validationFavorite: async (req, res, next) => {
+    const favSchema = Joi.string().valid('true', 'false');
+    const { error } = favSchema.validate(req.query.favorite);
+    if (error) {
+      return res.status(400).json({ message: error.details });
+    }
+    next();
+  },
   validationUser: (req, res, next) => {
     const userSchema = Joi.object({
       email: Joi.string().email().required(),

@@ -10,12 +10,13 @@ const {
 const { asyncWrapper } = require('../helpers/apiHelpers');
 const {
   validationContact,
-} = require('../middlewares/validationMiddleware');
+  validationFavorite,
+} = require("../middlewares/validationMiddleware");
   const authMiddlewar = require('../middlewares/auth')
 
 const contactsRouter = new express.Router();
 
-contactsRouter.get("/",authMiddlewar, asyncWrapper(getContactsController));
+contactsRouter.get("/",authMiddlewar,validationFavorite, asyncWrapper(getContactsController));
 contactsRouter.get("/:contactId",authMiddlewar, asyncWrapper(getContactByIdController));
 contactsRouter.post("/", authMiddlewar, validationContact, asyncWrapper(addContactController));
 contactsRouter.delete("/:contactId", authMiddlewar, asyncWrapper(deleteContactController));
