@@ -12,7 +12,7 @@ const authMiddlewar = async (req, res, next) => {
         try {
             const { _id } = await jwt.verify(token, JWT_SECRET);
             const user = await User.findById(_id);
-            if (!user) {
+            if (!user || !user.token) {
                 res.status(401).json({ message: "Not authorized user" });
             }
             req.user = user;
