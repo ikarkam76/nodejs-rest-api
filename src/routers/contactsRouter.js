@@ -15,7 +15,7 @@ const {
 
 const contactsRouter = new express.Router();
 
-contactsRouter.get("/", asyncWrapper(getContactsController));
+contactsRouter.get("/",authMiddlewar, asyncWrapper(getContactsController));
 contactsRouter.get("/:contactId",validationId, asyncWrapper(getContactByIdController));
 contactsRouter.post("/", authMiddlewar, validationContact, asyncWrapper(addContactController));
 contactsRouter.delete("/:contactId", validationId, asyncWrapper(deleteContactController));

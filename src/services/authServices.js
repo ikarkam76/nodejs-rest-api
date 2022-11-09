@@ -32,8 +32,19 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
         return res.status(401).json({message: "Wrong password!"})
     }
-    const token = jwt.sign({ _id: user._id }, JWT_SECRET);
-    res.status(200).json({ token: token, message: "Token created!"});
+    const newToken = jwt.sign({ _id: user._id }, JWT_SECRET);
+    const response = await User.findByIdAndUpdate(
+      user._id,
+      { $set: { token: newToken } },
+      { returnDocument: "after" }
+    );
+    res.status(200).json({
+        token: response.token,
+        user: {
+            email: response.email,
+            subscription: response.subscription
+        }
+    });
 };
 
 const logout = async (req, res) => {
