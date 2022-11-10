@@ -23,15 +23,35 @@ This project created with:
 - `npm run lint` &mdash; run a code check with eslint, must run before each PR and fix all linter errors
 - `npm lint:fix` &mdash; the same linter check, but with automatic fixes for simple errors
  ### Routes:
-Server will start on `/api/contacts` 
-- `GET` &mdash; `/` get all contacts
+#### Users:  `/api/users`
+- `POST` &mdash; `/register` register new user
+- `GET` &mdash; `/login` log in and get token in response
+- `GET` &mdash; `/current` get data of current user (request: `Authorization: "Bearer {{token}}"`)
+- `PATCH` &mdash; `/` update `subscription` in current user (request: `Authorization: "Bearer {{token}}"`, body: `'pro'`, `'starter'` or `'business'`)
+- `POST` &mdash; `/logout` log out (your auth token will delete)
+
+#### Contacts:  `/api/contacts`
+- `GET` &mdash; `/` get all contacts 
+- `GET` &mdash; `/` add filter:  request `favorite`: `true` or `false`
+- `GET` &mdash; `/` add pagination: reguest `page`: /number/, `limit`: /number/
 - `GET` &mdash; `/:contactId` get contact by id
 - `POST` &mdash; `/` add new contact
 - `PUT` &mdash; `/:contactId` change one contact by id
 - `DELETE` &mdash; `/:contactId` remove one contact by id
-- `PATCH` &mdash;  `/:contactId/favorite` change status in one contact
+- `PATCH` &mdash; `/:contactId/favorite` change status in one contact
+
+
+
 #### Options:
-`POST` &mdash; body of new contact:
+Schema of new user:
+Field        | Option  | Description                   |Example
+-------------|---------|-------------------------------|-------
+email        | string  | valid email address           | "email@site.com"
+password     | string  | min 6 symbols                 | "123456"
+subscription | string  |not required, default "starter"| "pro"
+
+
+Schema of new contact:
 Field    | Option  | Description                 |Example
 ---------|---------|-----------------------------|-------
 name     | string  |anything                     |"Denis Smit"
