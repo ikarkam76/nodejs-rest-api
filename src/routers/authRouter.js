@@ -13,7 +13,7 @@ const {
   validationSubscription,
 } = require("../middlewares/validationMiddleware");
 const authMiddlewar = require("../middlewares/auth");
-const { uploadMiddleware, avatarMiddleware } = require("../middlewares/filesMiddlewar");
+const { uploadMiddleware } = require("../middlewares/filesMiddlewar");
 
 const authRouter = new express.Router();
 
@@ -26,7 +26,6 @@ authRouter.patch(
   "/avatar",
   authMiddlewar,
   uploadMiddleware.single("avatar"),
-  avatarMiddleware,
   asyncWrapper(updateAvatarController)
 );
 module.exports = authRouter;

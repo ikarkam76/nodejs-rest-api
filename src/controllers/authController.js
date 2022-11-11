@@ -1,4 +1,4 @@
-const { register, login, logout, current, updateSubscription } = require('../services/authServices');
+const { register, login, logout, current, updateSubscription, updateAvatar } = require('../services/authServices');
 
 const registerController = async (req, res, next) => {
     const response = await register(req, res);
@@ -32,9 +32,8 @@ const updateSubscriptionController =  async (req, res, next) => {
 }
 
 const updateAvatarController = async (req, res, next) => {
-const file = req.file;
-const user = req.user;
-res.status(200).json({ file, user, message: "Avatar uploated!" });};
+const response = await updateAvatar(req, res);
+res.status(200).json({response, message: "Avatar uploated!" });};
 
 module.exports = {
   registerController,
