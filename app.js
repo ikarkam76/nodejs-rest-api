@@ -3,7 +3,6 @@ const logger = require('morgan');
 const cors = require('cors');
 
 const authRouter = require('./src/routers/authRouter');
-const filesRouter = require("./src/routers/filesRouter");
 const contactsRouter = require('./src/routers/contactsRouter');
 
 const { errorHandler } = require('./src/helpers/apiHelpers');
@@ -17,7 +16,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', authRouter);
-app.use('/api/files', filesRouter)
 app.use('/api/contacts', contactsRouter);
 
 app.use(errorHandler);
