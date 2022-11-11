@@ -31,6 +31,10 @@ const updateSubscriptionController =  async (req, res, next) => {
     res.status(200).json({ response });
 }
 
+const updateAvatarController = async (req, res, next) => {
+const file = req.file;
+const user = req.user;
+res.status(200).json({ file, user, message: "Avatar uploated!" });};
 
 module.exports = {
   registerController,
@@ -38,4 +42,5 @@ module.exports = {
   logoutController,
   currentController,
   updateSubscriptionController,
+  updateAvatarController,
 };

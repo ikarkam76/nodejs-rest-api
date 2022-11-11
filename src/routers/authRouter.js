@@ -5,6 +5,7 @@ const {
   logoutController,
   currentController,
   updateSubscriptionController,
+  updateAvatarController,
 } = require("../controllers/authController");
 const { asyncWrapper } = require("../helpers/apiHelpers");
 const {
@@ -12,6 +13,7 @@ const {
   validationSubscription,
 } = require("../middlewares/validationMiddleware");
 const authMiddlewar = require("../middlewares/auth");
+const { uploadMiddleware, avatarMiddleware } = require("../middlewares/filesMiddlewar");
 
 const authRouter = new express.Router();
 
@@ -20,5 +22,11 @@ authRouter.get("/login", validationUser, asyncWrapper(loginController));
 authRouter.post('/logout', authMiddlewar, asyncWrapper(logoutController));
 authRouter.get("/current", authMiddlewar, asyncWrapper(currentController));
 authRouter.patch("/", authMiddlewar, validationSubscription, asyncWrapper(updateSubscriptionController));
-
+authRouter.patch(
+  "/avatar",
+  authMiddlewar,
+  uploadMiddleware.single("avatar"),
+  avatarMiddleware,
+  asyncWrapper(updateAvatarController)
+);
 module.exports = authRouter;
