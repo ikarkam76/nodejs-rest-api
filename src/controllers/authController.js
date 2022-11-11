@@ -2,8 +2,13 @@ const { register, login, logout, current, updateSubscription } = require('../ser
 
 const registerController = async (req, res, next) => {
     const response = await register(req, res);
-    const { email, password, subscription } = response;
-    res.status(201).json({ email , password, subscription, message:'User created!' });
+    const { email, password, subscription, avatarURL } = response;
+    res
+      .status(201)
+      .json(
+        { email, password, subscription, avatarURL ,
+         message: "User created!" }
+      );
 }
 
 const loginController = async (req, res, next) => {
