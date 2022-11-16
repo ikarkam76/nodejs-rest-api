@@ -24,7 +24,7 @@ const register = async (req, res) => {
     email,
     password: hashedPassword,
     subscription,
-    avatarURL: url,
+    avatarURL: url
   });
   try {
     await user.save();
