@@ -1,9 +1,14 @@
-const { register, login, logout, current, updateSubscription } = require('../services/authServices');
+const { register, login, logout, current, updateSubscription, updateAvatar } = require('../services/authServices');
 
 const registerController = async (req, res, next) => {
     const response = await register(req, res);
-    const { email, password, subscription } = response;
-    res.status(201).json({ email , password, subscription, message:'User created!' });
+    const { email, password, subscription, avatarURL } = response;
+    res
+      .status(201)
+      .json(
+        { email, password, subscription, avatarURL ,
+         message: "User created!" }
+      );
 }
 
 const loginController = async (req, res, next) => {
@@ -26,6 +31,9 @@ const updateSubscriptionController =  async (req, res, next) => {
     res.status(200).json({ response });
 }
 
+const updateAvatarController = async (req, res, next) => {
+const response = await updateAvatar(req, res);
+res.status(200).json({response, message: "Avatar uploated!" });};
 
 module.exports = {
   registerController,
@@ -33,4 +41,5 @@ module.exports = {
   logoutController,
   currentController,
   updateSubscriptionController,
+  updateAvatarController,
 };

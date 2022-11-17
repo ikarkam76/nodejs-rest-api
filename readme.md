@@ -5,11 +5,17 @@ This project created with:
 - [morgan](https://github.com/expressjs/morgan#readme)
 - [express](http://expressjs.com/)
 - [mongoose](https://mongoosejs.com/)
+- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#readme)
 - [joi](https://github.com/hapijs/joi#readme)
 - [cross-env](https://github.com/kentcdodds/cross-env#readme)
 - [dotenv](https://github.com/motdotla/dotenv#readme)
 - [nodemon](https://nodemon.io/)
 - [eslint](https://eslint.org/)
+- [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
+- [multer](https://github.com/expressjs/multer#readme)
+- [jimp](https://github.com/oliver-moran/jimp#readme)
+- [gravatar](https://www.npmjs.com/package/gravatar)
+- [uuid](https://github.com/uuidjs/uuid#readme)
  ### 1. Create a .env file in the root of your project:
 ```javascript
 .env
@@ -24,7 +30,7 @@ This project created with:
 - `npm lint:fix` &mdash; the same linter check, but with automatic fixes for simple errors
  ### Routes:
 #### Users:  `/api/users`
-- `POST` &mdash; `/register` register new user
+- `POST` &mdash; `/register` register new user (add avatar with [gravatar](https://www.npmjs.com/package/gravatar))
 - `GET` &mdash; `/login` log in and get token in response
 - `GET` &mdash; `/current` get data of current user (request: `Authorization: "Bearer {{token}}"`)
 - `PATCH` &mdash; `/` update `subscription` in current user (request: `Authorization: "Bearer {{token}}"`, body: `'pro'`, `'starter'` or `'business'`)
