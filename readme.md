@@ -1,5 +1,6 @@
 
 ## GoIT Node.js 
+####For start this project you need `Node.js`
 This project created with:
 - [cors](https://github.com/expressjs/cors#readme)
 - [morgan](https://github.com/expressjs/morgan#readme)
@@ -14,13 +15,15 @@ This project created with:
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
 - [multer](https://github.com/expressjs/multer#readme)
 - [jimp](https://github.com/oliver-moran/jimp#readme)
-- [gravatar](https://www.npmjs.com/package/gravatar)
 - [uuid](https://github.com/uuidjs/uuid#readme)
  ### 1. Create a .env file in the root of your project:
 ```javascript
 .env
-1. PORT=3000 //your localhost port, for example 3000
-2. MONGODB_URL=mongodb+srv:... //path to your database on mongodb
+1 PORT=3000 //your localhost port, for example 3000
+2 MONGODB_URL=... //path to your database on mongodb
+3 JWT_SECRET=... //create secret wird to generic password (for example salt)
+4 SENDGRID_API_KEY=... //your sehdgrid api key
+5 SENDGRID_EMAIL=... //your sendgrid email
 ```
  ### 2. Install all dependencies with `npm` or `yarn`
  ### Commands:
@@ -30,7 +33,54 @@ This project created with:
 - `npm lint:fix` &mdash; the same linter check, but with automatic fixes for simple errors
  ### Routes:
 #### Users:  `/api/users`
-- `POST` &mdash; `/register` register new user (add avatar with [gravatar](https://www.npmjs.com/package/gravatar))
+####Registration request
+```javascript
+POST /api/users/register
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com",
+  "password": "examplepassword"
+}
+```
+####Resending a email request
+```javascript
+POST /api/users/verify
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com"
+}
+```
+####Login request
+```javascript
+GET /api/users/login
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com",
+  "password": "examplepassword"
+}
+```
+####Logout request
+```javascript
+POST /api/users/logout
+Authorization: "Bearer {{token}}"
+```
+####Current user request
+```javascript
+GET /api/users/current
+Authorization: "Bearer {{token}}"
+```
+####Update subscription
+```javascript
+PATCH /api/users
+Content-Type: application/json
+RequestBody: {
+  "subscription": "pro", "starter" or "business"
+}
+Authorization: "Bearer {{token}}"
+```
+
+- `POST` &mdash; `/register` register new user (add avatar with [gravatar](https://www.npmjs.com/package/gravatar)), send verification link to email. 
+- `POST` &mdash; `/verify` if you need repeat letter with verification link
 - `GET` &mdash; `/login` log in and get token in response
 - `GET` &mdash; `/current` get data of current user (request: `Authorization: "Bearer {{token}}"`)
 - `PATCH` &mdash; `/` update `subscription` in current user (request: `Authorization: "Bearer {{token}}"`, body: `'pro'`, `'starter'` or `'business'`)
@@ -52,7 +102,7 @@ This project created with:
 Schema of new user:
 Field        | Option  | Description                   |Example
 -------------|---------|-------------------------------|-------
-email        | string  | valid email address           | "email@site.com"
+email        | string  | valid email address           | "example@example.com"
 password     | string  | min 6 symbols                 | "123456"
 subscription | string  |not required, default "starter"| "pro"
 
@@ -61,6 +111,6 @@ Schema of new contact:
 Field    | Option  | Description                 |Example
 ---------|---------|-----------------------------|-------
 name     | string  |anything                     |"Denis Smit"
-email    | string  | valid email address         | "email@site.com"
+email    | string  | valid email address         | "example@example.com"
 phone    | string  | valid phone number          | "(000)123-4567"
 favorite | boolean |not required, default "false"| `true` or `false`

@@ -2,7 +2,7 @@ const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
 const {User} = require('../models/userModel')
 
-const { SENDGRID_API_KEY, PORT } = process.env;
+const { SENDGRID_API_KEY, PORT, SENDGRID_EMAIL } = process.env;
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 
@@ -10,7 +10,7 @@ const sendVerificationEmail = async ({ email, token }) => {
     const url = `localhost:${PORT}/api/users/verify/${token}`;
     const msg = {
       to: email,
-      from: "ikarkam76@meta.ua",
+      from: SENDGRID_EMAIL,
       subject: "Please verify your email",
       text: `Open this link ${url}`,
       html: `<strong>Open this link ${url}</strong>`,
