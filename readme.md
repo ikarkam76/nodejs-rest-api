@@ -1,7 +1,7 @@
 
 ## GoIT Node.js 
-####For start this project you need `Node.js`
-This project created with:
+#### For start this project you need `Node.js`
+#### This project created with:
 - [cors](https://github.com/expressjs/cors#readme)
 - [morgan](https://github.com/expressjs/morgan#readme)
 - [express](http://expressjs.com/)
@@ -32,8 +32,7 @@ This project created with:
 - `npm run lint` &mdash; run a code check with eslint, must run before each PR and fix all linter errors
 - `npm lint:fix` &mdash; the same linter check, but with automatic fixes for simple errors
  ### Routes:
-#### Users:  `/api/users`
-####Registration request
+#### Registration request
 ```javascript
 POST /api/users/register
 Content-Type: application/json
@@ -42,7 +41,7 @@ RequestBody: {
   "password": "examplepassword"
 }
 ```
-####Resending a email request
+#### Resending a email request
 ```javascript
 POST /api/users/verify
 Content-Type: application/json
@@ -50,7 +49,7 @@ RequestBody: {
   "email": "example@example.com"
 }
 ```
-####Login request
+#### Login request
 ```javascript
 GET /api/users/login
 Content-Type: application/json
@@ -59,17 +58,17 @@ RequestBody: {
   "password": "examplepassword"
 }
 ```
-####Logout request
+#### Logout request
 ```javascript
 POST /api/users/logout
 Authorization: "Bearer {{token}}"
 ```
-####Current user request
+#### Current user request
 ```javascript
 GET /api/users/current
 Authorization: "Bearer {{token}}"
 ```
-####Update subscription
+#### Update subscription
 ```javascript
 PATCH /api/users
 Content-Type: application/json
@@ -78,39 +77,62 @@ RequestBody: {
 }
 Authorization: "Bearer {{token}}"
 ```
-
-- `POST` &mdash; `/register` register new user (add avatar with [gravatar](https://www.npmjs.com/package/gravatar)), send verification link to email. 
-- `POST` &mdash; `/verify` if you need repeat letter with verification link
-- `GET` &mdash; `/login` log in and get token in response
-- `GET` &mdash; `/current` get data of current user (request: `Authorization: "Bearer {{token}}"`)
-- `PATCH` &mdash; `/` update `subscription` in current user (request: `Authorization: "Bearer {{token}}"`, body: `'pro'`, `'starter'` or `'business'`)
-- `POST` &mdash; `/logout` log out (your auth token will delete)
-
-#### Contacts:  `/api/contacts`
-- `GET` &mdash; `/` get all contacts 
-- `GET` &mdash; `/` add filter:  request `favorite`: `true` or `false`
-- `GET` &mdash; `/` add pagination: reguest `page`: /number/, `limit`: /number/
-- `GET` &mdash; `/:contactId` get contact by id
-- `POST` &mdash; `/` add new contact
-- `PUT` &mdash; `/:contactId` change one contact by id
-- `DELETE` &mdash; `/:contactId` remove one contact by id
-- `PATCH` &mdash; `/:contactId/favorite` change status in one contact
-
-
-
-#### Options:
-Schema of new user:
-Field        | Option  | Description                   |Example
--------------|---------|-------------------------------|-------
-email        | string  | valid email address           | "example@example.com"
-password     | string  | min 6 symbols                 | "123456"
-subscription | string  |not required, default "starter"| "pro"
-
-
-Schema of new contact:
-Field    | Option  | Description                 |Example
----------|---------|-----------------------------|-------
-name     | string  |anything                     |"Denis Smit"
-email    | string  | valid email address         | "example@example.com"
-phone    | string  | valid phone number          | "(000)123-4567"
-favorite | boolean |not required, default "false"| `true` or `false`
+#### Get all contacts
+```javascript
+GET /api/contacts
+```
+#### Add filter
+```javascript
+GET /api/contacts
+Content-Type: application/json
+RequestBody: {
+  "favorite": `true` or `false`
+}
+```
+#### Add pagination
+```javascript
+GET /api/contacts
+Content-Type: application/json
+RequestBody: {
+  "page": `number`,
+  "limit": `number`
+}
+```
+#### Get contact by ID
+```javascript
+GET /api/contacts/:contactId
+```
+#### Add new contact
+```javascript
+POST /api/contacts
+Content-Type: application/json
+RequestBody: {
+  "name": "examplename", //string
+  "email": "example@example.com", //string
+  "phone": "valid phone number", //string, valid (012)345-6789
+  "favorite": `boolean` //not required, default "false"
+}
+```
+#### Change one contact by ID
+```javascript
+PUT /api/contacts/:contactId
+Content-Type: application/json
+RequestBody: {
+  "name": "examplename", //string
+  "email": "example@example.com", //string
+  "phone": "valid phone number", //string, valid (012)345-6789
+  "favorite": `boolean` //not required, default "false"
+}
+```
+#### Delete one contact by ID
+```javascript
+DELETE /api/contacts/:contactId
+```
+#### Change status in one contact
+```javascript
+PATCH /api/contacts/:contactId/favorite
+Content-Type: application/json
+RequestBody: {
+  "favorite": `true` or `false`
+}
+```
