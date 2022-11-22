@@ -35,7 +35,8 @@ module.exports = {
     const userSchema = Joi.object({
       email: Joi.string().email().required(),
       password: Joi.string().min(6).required(),
-      subscription: Joi.string()
+      subscription: Joi.string(),
+      verificationToken: Joi.string()
     });
     const { error } = userSchema.validate(req.body);
     if (error) {

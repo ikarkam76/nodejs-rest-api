@@ -14,6 +14,7 @@ const {
 } = require("../middlewares/validationMiddleware");
 const authMiddlewar = require("../middlewares/auth");
 const { uploadMiddleware } = require("../middlewares/filesMiddlewar");
+const { verifyEmail } = require("../services/verifyEmailServices");
 
 const authRouter = new express.Router();
 
@@ -28,5 +29,5 @@ authRouter.patch(
   uploadMiddleware.single("avatar"),
   asyncWrapper(updateAvatarController)
 );
-authRouter.get("/verify/:verificationToken");
+authRouter.get("/verify/:verificationToken", asyncWrapper(verifyEmail) );
 module.exports = authRouter;
