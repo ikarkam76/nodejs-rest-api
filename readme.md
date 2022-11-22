@@ -6,22 +6,18 @@
 - [morgan](https://github.com/expressjs/morgan#readme)
 - [express](http://expressjs.com/)
 - [mongoose](https://mongoosejs.com/)
+- [sendgrid](https://sendgrid.com/go/email-brand-signup-sales-1?utm_source=google&utm_medium=cpc&utm_term=sendgrid&utm_campaign=SendGrid_G_S_Brand_ROE_Emerging&cq_plac=&cq_net=g&cq_pos=&cq_med=&cq_plt=gp&gclid=Cj0KCQiAg_KbBhDLARIsANx7wAyLN5nut55TsTo2YjL4saX0HA8i5wI0KUCIgb4F3D9ZpzIwIwbKkYAaAoEYEALw_wcB)
 - [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#readme)
-- [joi](https://github.com/hapijs/joi#readme)
-- [cross-env](https://github.com/kentcdodds/cross-env#readme)
-- [dotenv](https://github.com/motdotla/dotenv#readme)
 - [nodemon](https://nodemon.io/)
-- [eslint](https://eslint.org/)
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
 - [multer](https://github.com/expressjs/multer#readme)
-- [jimp](https://github.com/oliver-moran/jimp#readme)
-- [uuid](https://github.com/uuidjs/uuid#readme)
+- and other...
  ### 1. Create a .env file in the root of your project:
 ```javascript
 .env
 1 PORT=3000 //your localhost port, for example 3000
 2 MONGODB_URL=... //path to your database on mongodb
-3 JWT_SECRET=... //create secret wird to generic password (for example salt)
+3 JWT_SECRET=... //create secret word to generic password (for example salt)
 4 SENDGRID_API_KEY=... //your sehdgrid api key
 5 SENDGRID_EMAIL=... //your sendgrid email
 ```
