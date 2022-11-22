@@ -34,7 +34,7 @@ const register = async (req, res) => {
   try {
     await user.save();
     await sendVerificationEmail({ email, token });
-    return user;
+    return res.status(201).json({ message: "User created. Verify code send to your email.", user: user });
   } catch (error) {
     if (error.message.includes("duplicate key")) {
       return res.status(409).json({ message: "Email in use" });

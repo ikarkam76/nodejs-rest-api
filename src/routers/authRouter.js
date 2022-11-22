@@ -11,10 +11,11 @@ const { asyncWrapper } = require("../helpers/apiHelpers");
 const {
   validationUser,
   validationSubscription,
+  validationEmail,
 } = require("../middlewares/validationMiddleware");
 const authMiddlewar = require("../middlewares/auth");
 const { uploadMiddleware } = require("../middlewares/filesMiddlewar");
-const { verifyEmail } = require("../services/verifyEmailServices");
+const { verifyEmail, repeatVerifycationEmail } = require("../services/verifyEmailServices");
 
 const authRouter = new express.Router();
 
@@ -29,5 +30,6 @@ authRouter.patch(
   uploadMiddleware.single("avatar"),
   asyncWrapper(updateAvatarController)
 );
-authRouter.get("/verify/:verificationToken", asyncWrapper(verifyEmail) );
+authRouter.get("/verify/:verificationToken", asyncWrapper(verifyEmail));
+authRouter.post('/verify',validationEmail, asyncWrapper(repeatVerifycationEmail))
 module.exports = authRouter;

@@ -15,8 +15,7 @@ const sendVerificationEmail = async ({ email, token }) => {
       text: `Open this link ${url}`,
       html: `<strong>Open this link ${url}</strong>`,
     };
-
-    const response = await sgMail.send(msg)
+    await sgMail.send(msg)
         .then(() => {
             console.log("Email sent");
         })
@@ -28,12 +27,34 @@ const sendVerificationEmail = async ({ email, token }) => {
 const verifyEmail = async (req, res, next) => {
     const { verificationToken } = req.params;
     const user = await User.findOne({ verificationToken: verificationToken });
-    if (!user) { res.status(404).json({ message: "Not found!" }) };
+    if (!user) { return res.status(404).json({ message: "Not found!" }) };
     if (!user.verify) {
         await User.findByIdAndUpdate(user._id, { verify: true });
-        res.status(200).json({ message: "Verification successful" });
+        return res.status(200).json({ message: "Verification successful" });
     };
-    if (user.verify) {res.status(400).json({message: "Verification has already been passed"})}
+    if (user.verify) { return res.status(400).json({message: "Verification has already been passed"})}
 }
 
-module.exports = {sendVerificationEmail, verifyEmail};
+const repeatVerifycationEmail = async (req, res, next) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ message: "missing required field email" });
+  }
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    return res.status(404).json({ message: "Not found!" });
+    }
+    if (user.verify) {
+        return res
+          .status(400)
+          .json({ message: "Verification has already been passed" });
+    }
+    if (!user.verify) {
+        sendVerificationEmail({ email: user.email, token: user.verificationToken });
+        return res
+          .status(200)
+          .json({ message: "Verification code sent to your mail" });
+    }
+};
+
+module.exports = {sendVerificationEmail, verifyEmail, repeatVerifycationEmail};
