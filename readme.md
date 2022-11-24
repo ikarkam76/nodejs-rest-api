@@ -1,26 +1,25 @@
 
 ## GoIT Node.js 
-This project created with:
+#### For start this project you need `Node.js`
+#### This project created with:
 - [cors](https://github.com/expressjs/cors#readme)
 - [morgan](https://github.com/expressjs/morgan#readme)
 - [express](http://expressjs.com/)
 - [mongoose](https://mongoosejs.com/)
+- [sendgrid](https://sendgrid.com/go/email-brand-signup-sales-1?utm_source=google&utm_medium=cpc&utm_term=sendgrid&utm_campaign=SendGrid_G_S_Brand_ROE_Emerging&cq_plac=&cq_net=g&cq_pos=&cq_med=&cq_plt=gp&gclid=Cj0KCQiAg_KbBhDLARIsANx7wAyLN5nut55TsTo2YjL4saX0HA8i5wI0KUCIgb4F3D9ZpzIwIwbKkYAaAoEYEALw_wcB)
 - [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#readme)
-- [joi](https://github.com/hapijs/joi#readme)
-- [cross-env](https://github.com/kentcdodds/cross-env#readme)
-- [dotenv](https://github.com/motdotla/dotenv#readme)
 - [nodemon](https://nodemon.io/)
-- [eslint](https://eslint.org/)
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
 - [multer](https://github.com/expressjs/multer#readme)
-- [jimp](https://github.com/oliver-moran/jimp#readme)
-- [gravatar](https://www.npmjs.com/package/gravatar)
-- [uuid](https://github.com/uuidjs/uuid#readme)
+- and other...
  ### 1. Create a .env file in the root of your project:
 ```javascript
 .env
-1. PORT=3000 //your localhost port, for example 3000
-2. MONGODB_URL=mongodb+srv:... //path to your database on mongodb
+1 PORT=3000 //your localhost port, for example 3000
+2 MONGODB_URL=... //path to your database on mongodb
+3 JWT_SECRET=... //create secret word to generic password (for example salt)
+4 SENDGRID_API_KEY=... //your sehdgrid api key
+5 SENDGRID_EMAIL=... //your sendgrid email
 ```
  ### 2. Install all dependencies with `npm` or `yarn`
  ### Commands:
@@ -29,38 +28,107 @@ This project created with:
 - `npm run lint` &mdash; run a code check with eslint, must run before each PR and fix all linter errors
 - `npm lint:fix` &mdash; the same linter check, but with automatic fixes for simple errors
  ### Routes:
-#### Users:  `/api/users`
-- `POST` &mdash; `/register` register new user (add avatar with [gravatar](https://www.npmjs.com/package/gravatar))
-- `GET` &mdash; `/login` log in and get token in response
-- `GET` &mdash; `/current` get data of current user (request: `Authorization: "Bearer {{token}}"`)
-- `PATCH` &mdash; `/` update `subscription` in current user (request: `Authorization: "Bearer {{token}}"`, body: `'pro'`, `'starter'` or `'business'`)
-- `POST` &mdash; `/logout` log out (your auth token will delete)
-
-#### Contacts:  `/api/contacts`
-- `GET` &mdash; `/` get all contacts 
-- `GET` &mdash; `/` add filter:  request `favorite`: `true` or `false`
-- `GET` &mdash; `/` add pagination: reguest `page`: /number/, `limit`: /number/
-- `GET` &mdash; `/:contactId` get contact by id
-- `POST` &mdash; `/` add new contact
-- `PUT` &mdash; `/:contactId` change one contact by id
-- `DELETE` &mdash; `/:contactId` remove one contact by id
-- `PATCH` &mdash; `/:contactId/favorite` change status in one contact
-
-
-
-#### Options:
-Schema of new user:
-Field        | Option  | Description                   |Example
--------------|---------|-------------------------------|-------
-email        | string  | valid email address           | "email@site.com"
-password     | string  | min 6 symbols                 | "123456"
-subscription | string  |not required, default "starter"| "pro"
-
-
-Schema of new contact:
-Field    | Option  | Description                 |Example
----------|---------|-----------------------------|-------
-name     | string  |anything                     |"Denis Smit"
-email    | string  | valid email address         | "email@site.com"
-phone    | string  | valid phone number          | "(000)123-4567"
-favorite | boolean |not required, default "false"| `true` or `false`
+#### Registration request
+```javascript
+POST /api/users/register
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com",
+  "password": "examplepassword"
+}
+```
+#### Resending a email request
+```javascript
+POST /api/users/verify
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com"
+}
+```
+#### Login request
+```javascript
+GET /api/users/login
+Content-Type: application/json
+RequestBody: {
+  "email": "example@example.com",
+  "password": "examplepassword"
+}
+```
+#### Logout request
+```javascript
+POST /api/users/logout
+Authorization: "Bearer {{token}}"
+```
+#### Current user request
+```javascript
+GET /api/users/current
+Authorization: "Bearer {{token}}"
+```
+#### Update subscription
+```javascript
+PATCH /api/users
+Content-Type: application/json
+RequestBody: {
+  "subscription": "pro", "starter" or "business"
+}
+Authorization: "Bearer {{token}}"
+```
+#### Get all contacts
+```javascript
+GET /api/contacts
+```
+#### Add filter
+```javascript
+GET /api/contacts
+Content-Type: application/json
+RequestBody: {
+  "favorite": `true` or `false`
+}
+```
+#### Add pagination
+```javascript
+GET /api/contacts
+Content-Type: application/json
+RequestBody: {
+  "page": `number`,
+  "limit": `number`
+}
+```
+#### Get contact by ID
+```javascript
+GET /api/contacts/:contactId
+```
+#### Add new contact
+```javascript
+POST /api/contacts
+Content-Type: application/json
+RequestBody: {
+  "name": "examplename", //string
+  "email": "example@example.com", //string
+  "phone": "valid phone number", //string, valid (012)345-6789
+  "favorite": `boolean` //not required, default "false"
+}
+```
+#### Change one contact by ID
+```javascript
+PUT /api/contacts/:contactId
+Content-Type: application/json
+RequestBody: {
+  "name": "examplename", //string
+  "email": "example@example.com", //string
+  "phone": "valid phone number", //string, valid (012)345-6789
+  "favorite": `boolean` //not required, default "false"
+}
+```
+#### Delete one contact by ID
+```javascript
+DELETE /api/contacts/:contactId
+```
+#### Change status in one contact
+```javascript
+PATCH /api/contacts/:contactId/favorite
+Content-Type: application/json
+RequestBody: {
+  "favorite": `true` or `false`
+}
+```
