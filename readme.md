@@ -11,6 +11,7 @@
 - [nodemon](https://nodemon.io/)
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
 - [multer](https://github.com/expressjs/multer#readme)
+- [docker](https://www.docker.com/)
 - and other...
  ### 1. Create a .env file in the root of your project:
 ```javascript
